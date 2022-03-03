@@ -1,0 +1,28 @@
+#!/usr/sbin/nft -f
+#
+# Charite OpenVPN
+#
+# https://www.charite.de/service/itdoku/openvpn/
+#
+
+include "filter.nft"
+
+define server_ip = {
+  193.175.73.164,
+  193.175.73.165,
+  193.175.73.166,
+  193.175.73.167
+}
+define server_ip6 = {
+  2001:638:815:1:193:175:73:164,
+  2001:638:815:1:193:175:73:166,
+  2001:638:815:1:193:175:73:165,
+  2001:638:815:1:193:175:73:167
+}
+define server_port = { 1194 }
+
+add rule filter input  ip  saddr $server_ip  udp sport $server_port counter accept
+add rule filter input  ip6 saddr $server_ip6 udp sport $server_port counter accept
+
+add rule filter output ip  daddr $server_ip  udp dport $server_port counter accept
+add rule filter output ip6 daddr $server_ip6 udp dport $server_port counter accept

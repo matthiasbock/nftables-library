@@ -1,0 +1,14 @@
+#!/usr/sbin/nft -f
+#
+# Fortinet SSL-VPN
+#
+# https://doku.bht-berlin.de/zugang/vpn
+#
+
+include "filter.nft"
+
+define server_ip = { 141.64.0.253 }
+define server_port = { 443 }
+
+add rule filter input  ip daddr $server_ip tcp sport $server_port counter accept
+add rule filter output ip daddr $server_ip tcp dport $server_port counter accept
