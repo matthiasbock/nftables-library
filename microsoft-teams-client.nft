@@ -5,6 +5,8 @@
 # https://answers.microsoft.com/en-us/msteams/forum/all/ports-required-for-microsoft-teams/87c608b5-1650-4a84-a15a-9bd7846cb8bb
 #
 
+include "filter.nft"
+
 define udp_ip = {13.107.64.0/18, 52.112.0.0/14}
 define udp_ports = {3478, 3479, 3480, 3481}
 define tcp_ip = {
