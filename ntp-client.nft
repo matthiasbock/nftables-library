@@ -1,0 +1,6 @@
+#!/usr/bin/env -S /usr/sbin/nft -I /etc/firewall/nftables-library/ -f
+
+include "filter.nft"
+
+add rule inet filter output udp sport 123 udp dport 123 counter accept
+add rule inet filter input  udp sport 123 udp dport 123 ct state established counter accept

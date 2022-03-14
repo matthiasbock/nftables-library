@@ -1,0 +1,7 @@
+#!/usr/bin/env -S /usr/sbin/nft -I /etc/firewall/nftables-library/ -f
+
+include "filter.nft"
+
+# IPv4
+add rule inet filter output ip saddr 127.0.0.1 ip daddr 127.0.0.1 counter accept
+add rule inet filter input  ip saddr 127.0.0.1 ip daddr 127.0.0.1 counter accept
