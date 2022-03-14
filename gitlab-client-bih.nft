@@ -11,6 +11,6 @@ include "filter.nft"
 define server_address = 193.175.174.20
 define server_port = 2022
 
-add rule filter output ip daddr $server_address tcp dport $server_port counter accept
-add rule filter input  ip saddr $server_address tcp sport $server_port counter accept
+add rule inet filter output ip daddr $server_address tcp dport $server_port counter accept
+add rule inet filter input  ip saddr $server_address tcp sport $server_port counter accept
 # TODO: ct state established ?

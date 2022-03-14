@@ -2,6 +2,6 @@
 
 add table inet filter
 
-add chain inet filter input '{ type filter hook input priority filter; }'
-add chain inet filter forward '{ type filter hook forward priority filter; }'
-add chain inet filter output '{ type filter hook output priority filter; }'
+add chain inet filter input { type filter hook input priority filter; }
+add chain inet filter forward { type filter hook forward priority filter; }
+add chain inet filter output { type filter hook output priority filter; }

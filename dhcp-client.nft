@@ -3,11 +3,11 @@
 include "filter.nft"
 
 # IPv4
-add rule filter output udp sport 68 dport 67 counter accept
-add rule filter  input udp sport 67 dport 68 counter accept
+add rule inet filter output udp sport 68 udp dport 67 counter accept
+add rule inet filter  input udp sport 67 udp dport 68 counter accept
 # TODO: ct state established ?
 
 # IPv6
-add rule filter output udp sport 546 dport 547 counter accept
-add rule filter  input udp sport 547 dport 546 counter accept
+add rule inet filter output udp sport 546 udp dport 547 counter accept
+add rule inet filter  input udp sport 547 udp dport 546 counter accept
 # TODO: ct state established ?

@@ -3,11 +3,8 @@
 include "filter.nft"
 
 # Regular DNS
-define dns_protos = {udp, tcp}
-define dns_ports = {53, 853}
-
-add rule filter output meta l4proto $dns_protos th dport $dns_ports counter accept
-add rule filter  input meta l4proto $dns_protos th sport $dns_ports counter accept
+add rule inet filter output meta l4proto {udp, tcp} th dport {53, 853} counter accept
+add rule inet filter  input meta l4proto {udp, tcp} th sport {53, 853} counter accept
 # TODO: ct state established ?
 
 # Multicast DNS

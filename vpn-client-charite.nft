@@ -7,22 +7,23 @@
 
 include "filter.nft"
 
-define server_ip = {
+define charite_vpn_server_ip = {
   193.175.73.164,
   193.175.73.165,
   193.175.73.166,
   193.175.73.167
 }
-define server_ip6 = {
+define charite_vpn_server_ip6 = {
   2001:638:815:1:193:175:73:164,
   2001:638:815:1:193:175:73:166,
   2001:638:815:1:193:175:73:165,
   2001:638:815:1:193:175:73:167
 }
-define server_port = { 1194 }
+define charite_vpn_server_port = { 1194 }
 
-add rule filter input  ip  saddr $server_ip  udp sport $server_port counter accept
-add rule filter input  ip6 saddr $server_ip6 udp sport $server_port counter accept
+add rule inet filter output ip  daddr $charite_vpn_server_ip  udp dport $charite_vpn_server_port counter accept
+add rule inet filter output ip6 daddr $charite_vpn_server_ip6 udp dport $charite_vpn_server_port counter accept
 
-add rule filter output ip  daddr $server_ip  udp dport $server_port counter accept
-add rule filter output ip6 daddr $server_ip6 udp dport $server_port counter accept
+add rule inet filter input  ip  saddr $charite_vpn_server_ip  udp sport $charite_vpn_server_port counter accept
+add rule inet filter input  ip6 saddr $charite_vpn_server_ip6 udp sport $charite_vpn_server_port counter accept
+# TODO: ct state established ?
