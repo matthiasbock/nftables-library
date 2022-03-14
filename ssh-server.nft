@@ -1,0 +1,7 @@
+#!/usr/bin/env -S /usr/sbin/nft -I /etc/firewall/nftables-library/ -f
+
+include "filter.nft"
+
+add rule inet filter input  tcp dport 22 counter accept
+add rule inet filter output tcp sport 22 counter accept
+# TODO: ct state established ?
