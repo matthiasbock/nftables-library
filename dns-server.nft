@@ -1,0 +1,11 @@
+#!/usr/bin/env -S /usr/sbin/nft -I /etc/firewall/nftables-library/ -f
+
+include "filter.nft"
+
+# Regular DNS
+define dns_protos = {udp, tcp}
+define dns_ports = {53, 853}
+
+add rule filter  input meta l4proto $dns_protos th dport $dns_ports counter accept
+add rule filter output meta l4proto $dns_protos th sport $dns_ports counter accept
+# TODO: ct state established ?

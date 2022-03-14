@@ -1,4 +1,4 @@
-#!/usr/sbin/nft -f
+#!/usr/bin/env -S /usr/sbin/nft -I /etc/firewall/nftables-library/ -f
 #
 # Addresses and ports required for Microsoft Teams
 #
@@ -27,10 +27,11 @@ define tcp_ip6 = {
 }
 define tcp_ports = { 80, 443}
 
-add rule filter input ip  saddr $udp_ip  udp sports $udp_ports counter accept
-add rule filter input ip  saddr $tcp_ip  tcp sports $tcp_ports counter accept
-add rule filter input ip6 saddr $tcp_ip6 tcp sports $tcp_ports counter accept
-
 add rule filter output ip  daddr $udp_ip  udp dports $udp_ports counter accept
 add rule filter output ip  daddr $tcp_ip  tcp dports $tcp_ports counter accept
 add rule filter output ip6 daddr $tcp_ip6 tcp dports $tcp_ports counter accept
+
+add rule filter input ip  saddr $udp_ip  udp sports $udp_ports counter accept
+add rule filter input ip  saddr $tcp_ip  tcp sports $tcp_ports counter accept
+add rule filter input ip6 saddr $tcp_ip6 tcp sports $tcp_ports counter accept
+# TODO: ct state established ?
