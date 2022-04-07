@@ -1,6 +1,6 @@
 #!/usr/bin/env -S /usr/sbin/nft -I /etc/firewall/nftables-library/ -f
 #
-# Berlin Institute of Health Gitlab
+# GitLab - Berlin Institute of Health (BIH)
 #
 # https://git.bihealth.org/
 #
@@ -8,9 +8,9 @@
 include "filter.nft"
 
 # git pull/push via SSH, only IPv4 is available
-define server_address = 193.175.174.20
-define server_port = 2022
+define gitlab_bih_address = 193.175.174.20
+define gitlab_bih_port = 2022
 
-add rule inet filter output ip daddr $server_address tcp dport $server_port counter accept
-add rule inet filter input  ip saddr $server_address tcp sport $server_port counter accept
-# TODO: ct state established ?
+add rule inet filter output ip daddr $gitlab_bih_address tcp dport $gitlab_bih_port counter accept
+add rule inet filter input  ip saddr $gitlab_bih_address tcp sport $gitlab_bih_port ct state established counter accept
+
