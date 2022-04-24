@@ -3,5 +3,8 @@
 include "filter.nft"
 
 # Regular DNS
-add rule inet filter  input iif eth0 meta l4proto {udp, tcp} th dport {53, 853} counter accept
-add rule inet filter output meta l4proto {udp, tcp} th sport {53, 853} ct state established counter accept
+add rule inet filter input iifname eth0 meta l4proto {udp, tcp} th dport {53, 853} counter accept
+add rule inet filter output oifname eth0 meta l4proto {udp, tcp} th sport {53, 853} ct state established counter accept
+
+add rule inet filter output meta l4proto {udp, tcp} th sport {53, 853} counter drop
+

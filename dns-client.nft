@@ -6,9 +6,5 @@ include "filter.nft"
 add rule inet filter output meta l4proto {udp, tcp} th dport {53, 853} counter accept
 add rule inet filter  input meta l4proto {udp, tcp} th sport {53, 853} ct state established counter accept
 
-# Multicast DNS
-add rule inet filter input  udp sport 5353 counter accept
-add rule inet filter output udp dport 5353 counter accept
-
 # LLMNR
 # TODO
