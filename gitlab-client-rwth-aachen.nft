@@ -1,0 +1,16 @@
+#!/usr/bin/env -S /usr/sbin/nft -I /etc/firewall/nftables-library/ -f
+#
+# GitLab - Rheinisch-Westfaelische Technische Hochschule Aachen (RWTH Aachen)
+#
+# https://gitlab.vci.rwth-aachen.de:9000/
+#
+
+include "filter.nft"
+
+# only IPv4 is available
+define gitlab_rwth_address = 137.226.35.172
+define gitlab_rwth_port = 9000
+
+add rule inet filter output ip daddr $gitlab_rwth_address tcp dport $gitlab_rwth_port counter accept comment "RWTH Aachen GitLab"
+add rule inet filter input  ip saddr $gitlab_rwth_address tcp sport $gitlab_rwth_port ct state established counter accept comment "RWTH Aachen GitLab"
+
