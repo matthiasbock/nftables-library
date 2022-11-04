@@ -4,13 +4,23 @@ include "filter.nft"
 
 #
 # TODO:
-# - github.com
 # - gitlab.com
 # - bitbucket.org
 # - sourceforge.net
 # - codeberg.org
 # - codebasehq.com
 #
+
+
+#
+# GitHub
+# https://github.com/
+#
+define github_ip = 140.82.121.4
+define github_git_ports = {80, 443, 22}
+
+add rule inet filter output ip daddr $github_ip tcp dport $github_git_ports counter accept comment "GitHub"
+add rule inet filter input  ip saddr $github_ip tcp sport $github_git_ports ct state established counter accept comment "GitHub"
 
 
 #
