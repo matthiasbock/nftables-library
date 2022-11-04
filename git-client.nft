@@ -46,8 +46,8 @@ add rule inet filter input  ip saddr $gitlab_rwth_address tcp sport $gitlab_rwth
 define gitlab_bih_address = 193.175.174.20
 define gitlab_bih_port = 2022
 
-add rule inet filter output ip daddr $gitlab_bih_address tcp dport $gitlab_bih_port counter accept
-add rule inet filter input  ip saddr $gitlab_bih_address tcp sport $gitlab_bih_port ct state established counter accept
+add rule inet filter output ip daddr $gitlab_bih_address tcp dport $gitlab_bih_port counter accept comment "BIH GitLab"
+add rule inet filter input  ip saddr $gitlab_bih_address tcp sport $gitlab_bih_port ct state established counter accept comment "BIH GitLab"
 
 
 #
@@ -57,5 +57,5 @@ add rule inet filter input  ip saddr $gitlab_bih_address tcp sport $gitlab_bih_p
 define gitlab_charite_address = 141.42.206.81
 define gitlab_charite_port = 2022
 
-add rule inet filter output ip daddr $gitlab_charite_address tcp dport $gitlab_charite_port counter accept
-add rule inet filter input  ip saddr $gitlab_charite_address tcp sport $gitlab_charite_port ct state established counter accept
+add rule inet filter output ip daddr $gitlab_charite_address tcp dport $gitlab_charite_port counter accept comment "Charite GitLab Ext"
+add rule inet filter input  ip saddr $gitlab_charite_address tcp sport $gitlab_charite_port ct state established counter accept comment "Charite GitLab Ext"
