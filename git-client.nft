@@ -18,14 +18,14 @@ include "filter.nft"
 # https://git.kernel.org/
 #
 define git_kernel_org_ip4 = 145.40.68.75
-define git_kernel_porg_ip6 = 2604:1380:4601:e00::1
-define git_kernel_org_port = 9418
+define git_kernel_org_ip6 = 2604:1380:4601:e00::1
+define git_kernel_org_ports = {80, 443, 22, 9418}
 
-add rule inet filter output ip daddr $git_kernel_org_ip4 tcp dport $git_kernel_org_port
-add rule inet filter input  ip saddr $git_kernel_org_ip4 tcp sport $git_kernel_org_port ct state established counter accept
+add rule inet filter output ip daddr $git_kernel_org_ip4 tcp dport $git_kernel_org_ports counter accept comment "git.kernel.org"
+add rule inet filter input  ip saddr $git_kernel_org_ip4 tcp sport $git_kernel_org_ports ct state established counter accept comment "git.kernel.org"
 
-add rule inet filter output ip6 daddr $git_kernel_org_ip6 tcp dport $git_kernel_org_port
-add rule inet filter input  ip6 saddr $git_kernel_org_ip6 tcp sport $git_kernel_org_port ct state established counter accept
+add rule inet filter output ip6 daddr $git_kernel_org_ip6 tcp dport $git_kernel_org_ports counter accept comment "git.kernel.org"
+add rule inet filter input  ip6 saddr $git_kernel_org_ip6 tcp sport $git_kernel_org_ports ct state established counter accept comment "git.kernel.org"
 
 
 #
