@@ -1,0 +1,61 @@
+#!/usr/bin/env -S /usr/sbin/nft -I /etc/firewall/nftables-library/ -f
+
+include "filter.nft"
+
+#
+# TODO:
+# - github.com
+# - gitlab.com
+# - bitbucket.org
+# - sourceforge.net
+# - codeberg.org
+# - codebasehq.com
+#
+
+
+#
+# Kernel.org git repositories
+# https://git.kernel.org/
+#
+define git_kernel_org_ip4 = 145.40.68.75
+define git_kernel_porg_ip6 = 2604:1380:4601:e00::1
+define git_kernel_org_port = 9418
+
+add rule inet filter output ip daddr $git_kernel_org_ip4 tcp dport $git_kernel_org_port
+add rule inet filter input  ip saddr $git_kernel_org_ip4 tcp sport $git_kernel_org_port ct state established counter accept
+
+add rule inet filter output ip6 daddr $git_kernel_org_ip6 tcp dport $git_kernel_org_port
+add rule inet filter input  ip6 saddr $git_kernel_org_ip6 tcp sport $git_kernel_org_port ct state established counter accept
+
+
+#
+# GitLab - Rheinisch-Westfaelische Technische Hochschule Aachen (RWTH Aachen)
+# https://gitlab.vci.rwth-aachen.de:9000/
+#
+define gitlab_rwth_address = 137.226.35.172
+define gitlab_rwth_port = 9000
+
+add rule inet filter output ip daddr $gitlab_rwth_address tcp dport $gitlab_rwth_port counter accept comment "RWTH Aachen GitLab"
+add rule inet filter input  ip saddr $gitlab_rwth_address tcp sport $gitlab_rwth_port ct state established counter accept comment "RWTH Aachen GitLab"
+
+
+#
+# GitLab - Berlin Institute of Health (BIH)
+# https://git.bihealth.org/
+#
+define gitlab_bih_address = 193.175.174.20
+define gitlab_bih_port = 2022
+
+add rule inet filter output ip daddr $gitlab_bih_address tcp dport $gitlab_bih_port counter accept
+add rule inet filter input  ip saddr $gitlab_bih_address tcp sport $gitlab_bih_port ct state established counter accept
+
+
+#
+# GitLab Ext - Charite Universitaetsmedizin Berlin
+# https://git-ext.charite.de/
+#
+define gitlab_charite_address = 141.42.206.81
+define gitlab_charite_port = 2022
+
+add rule inet filter output ip daddr $gitlab_charite_address tcp dport $gitlab_charite_port counter accept
+add rule inet filter input  ip saddr $gitlab_charite_address tcp sport $gitlab_charite_port ct state established counter accept
