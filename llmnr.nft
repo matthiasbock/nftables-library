@@ -1,0 +1,26 @@
+#!/usr/bin/env -S /usr/sbin/nft -I /etc/firewall/nftables-library/ -f
+
+include "filter.nft"
+
+#
+# Link-local Multicast Name Resolution
+#
+# https://de.wikipedia.org/wiki/Link-local_Multicast_Name_Resolution
+#
+
+# Multicast IPv4
+add rule inet filter input  ip daddr == 224.0.0.252 udp sport 5355 udp dport 5355 counter accept comment "LLMNR"
+add rule inet filter output ip daddr == 224.0.0.252 udp sport 5355 udp dport 5355 counter accept comment "LLMNR"
+
+# Multicast IPv6
+add rule inet filter input  ip6 daddr == ff02::1:3 udp sport 5355 udp dport 5355 counter accept comment "LLMNR"
+add rule inet filter output ip6 daddr == ff02::1:3 udp sport 5355 udp dport 5355 counter accept comment "LLMNR"
+
+# Unicast (incoming)
+add rule inet filter input  tcp dport 5355 counter accept comment "LLMNR"
+add rule inet filter output tcp sport 5355 counter accept comment "LLMNR"
+
+# Unicast (outgoing)
+add rule inet filter output tcp dport 5355 counter accept comment "LLMNR"
+add rule inet filter input  tcp sport 5355 counter accept comment "LLMNR"
+
