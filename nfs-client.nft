@@ -1,0 +1,22 @@
+#!/usr/bin/env -S /usr/sbin/nft -I /etc/firewall/nftables-library/ -f
+
+include "filter.nft"
+
+#
+# Network File System (NFS)
+# https://de.wikipedia.org/wiki/Network_File_System
+#
+# NFSv3 and earlier
+#
+# portmapper
+add rule inet filter output udp dport 111 counter accept comment "NFS client (portmapper)"
+add rule inet filter input  udp sport 111 ct state established counter accept comment "NFS client (portmapper)"
+
+# mountd
+add rule inet filter output udp dport 694 counter accept comment "NFS client (mountd)"
+add rule inet filter input  udp sport 694 ct state established counter accept comment "NFS client (mountd)"
+
+# nfsd
+add rule inet filter output tcp dport 2049 counter accept comment "NFS client (nfsd)"
+add rule inet filter input  tcp sport 2049 ct state established counter accept comment "NFS client (nfsd)"
+
