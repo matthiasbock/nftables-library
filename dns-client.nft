@@ -2,9 +2,28 @@
 
 include "filter.nft"
 
-# Regular DNS queries
-add rule inet filter output meta l4proto {udp, tcp} th dport {53, 853} counter accept
-add rule inet filter  input meta l4proto {udp, tcp} th sport {53, 853} ct state established counter accept
+#
+# Enable outgoing DNS queries
+#
+add rule inet filter output meta l4proto {udp, tcp} th dport 53 counter accept comment "DNS client"
+add rule inet filter  input meta l4proto {udp, tcp} th sport 53 ct state established counter accept comment "DNS client"
 
-# LLMNR
-# TODO
+#
+# TODO:
+# Secure DNS:
+#
+# - DNS over TLS (DoT)
+#   https://de.wikipedia.org/wiki/DNS_over_TLS
+#
+define dns_over_tls_providers = {}
+
+add rule inet filter output meta l4proto {udp, tcp} th dport 853 counter accept comment "DNS-over-TLS client"
+add rule inet filter  input meta l4proto {udp, tcp} th sport 853 ct state established counter accept comment "DNS-over-TLS client"
+
+#
+# - DNS over HTTPS (DoH)
+#   https://de.wikipedia.org/wiki/DNS_over_HTTPS
+# - DNS over QUIC (DoQ)
+#   https://dnsprivacy.org/public_resolvers/
+#
+
