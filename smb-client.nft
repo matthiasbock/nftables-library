@@ -4,16 +4,24 @@ include "filter.nft"
 
 #
 # https://de.wikipedia.org/wiki/Server_Message_Block
+# https://de.wikipedia.org/wiki/NetBIOS_over_TCP/IP
 #
 # Note: Requires enabled name resolution (DNS, WINS or LLMNR)
 #
+# Up until Windows ME SMB was encapsulated in NetBIOS
+#
+add rule inet filter output udp sport 137 udp dport 137 counter accept comment "NetBIOS Name Resolution"
+add rule inet filter input  udp sport 137 udp dport 137 ct state established counter accept comment "NetBIOS Name Resolution"
 
-#add rule inet filter output ip daddr == 192.168.178.0/24 log counter accept
-#add rule inet filter input  ip saddr == 192.168.178.0/24 log counter accept
+add rule inet filter output udp sport 138 udp dport 138 counter accept comment "NetBIOS Datagram Service"
+add rule inet filter input  udp sport 138 udp dport 138 ct state established counter accept comment "NetBIOS Datagram Service"
 
-add rule inet filter output tcp dport {137, 138, 139, 445} counter accept
-add rule inet filter input  tcp sport {137, 138, 139, 445} ct state established counter accept
+add rule inet filter output tcp dport 139 counter accept comment "NetBIOS Session Service"
+add rule inet filter input  tcp sport 139 ct state established counter accept comment "NetBIOS Session Service"
 
-add rule inet filter output udp dport {137, 138, 139} counter accept
-add rule inet filter input  udp sport {137, 138, 139} ct state established counter accept
+#
+# From Windows 2000 onward: standalone
+#
+add rule inet filter output tcp dport 445 counter accept comment "SMB client"
+add rule inet filter input  tcp sport 445 ct state established counter accept comment "SMB client"
 
