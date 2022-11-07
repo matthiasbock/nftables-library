@@ -1,0 +1,23 @@
+#!/usr/bin/env -S /usr/sbin/nft -I /etc/firewall/nftables-library/ -f
+#
+# Charite OfficeVDI
+#
+# https://officeportal.charite.de/
+# https://vdiportal.charite.de/
+# https://vdiportal-ext.charite.de/
+#
+# Technical:
+# * https://techzone.vmware.com/resource/network-ports-vmware-horizon#internal-connection
+# * https://kb.vmware.com/s/article/1027217
+#
+
+include "filter.nft"
+
+define charite_officevdi_server = 10.32.33.0/24  # { 10.32.33.140, 10.32.33.121, 10.32.33.132 }
+
+#
+# Browser to Horizon Connection Server
+#
+add rule inet filter output ip daddr $charite_officevdi_server tcp dport 8443 counter accept comment "Charite OfficeVDI Web-Client"
+add rule inet filter input  ip saddr $charite_officevdi_server tcp sport 8443 ct state established counter accept comment "Charite OfficeVDI Web-Client"
+
