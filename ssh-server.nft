@@ -2,6 +2,9 @@
 
 include "filter.nft"
 
-add rule inet filter input  tcp dport 22 counter accept
-add rule inet filter output tcp sport 22 counter accept
-# TODO: ct state established ?
+#
+# Secure Shell (SSH)
+#
+add rule inet filter input  tcp dport 22 counter accept comment "SSH server"
+add rule inet filter output tcp sport 22 ct state established counter accept comment "SSH server"
+
