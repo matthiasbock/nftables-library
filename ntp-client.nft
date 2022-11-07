@@ -2,5 +2,16 @@
 
 include "filter.nft"
 
-add rule inet filter output udp sport 123 udp dport 123 counter accept
-add rule inet filter input  udp sport 123 udp dport 123 ct state established counter accept
+#
+# Enable outgoing NTP requests
+#
+add rule inet filter output udp sport 123 udp dport 123 counter accept comment "NTP client"
+add rule inet filter input  udp sport 123 udp dport 123 ct state established counter accept "NTP client"
+
+#
+# Network Time Security (NTS)
+# https://www.rfc-editor.org/rfc/rfc8915.html
+#
+add rule inet filter output tcp dport 4460 counter accept comment "NTS client"
+add rule inet filter input  tcp sport 4460 ct state established counter accept comment "NTS client"
+
