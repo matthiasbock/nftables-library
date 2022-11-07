@@ -7,6 +7,9 @@
 
 include "filter.nft"
 
+#
+# VPN
+#
 define charite_vpn_server_ip = {
   193.175.73.164,
   193.175.73.165,
@@ -21,9 +24,18 @@ define charite_vpn_server_ip6 = {
 }
 define charite_vpn_server_port = { 1194 }
 
-add rule inet filter output ip  daddr $charite_vpn_server_ip  udp dport $charite_vpn_server_port counter accept
-add rule inet filter output ip6 daddr $charite_vpn_server_ip6 udp dport $charite_vpn_server_port counter accept
+add rule inet filter output ip  daddr $charite_vpn_server_ip  udp dport $charite_vpn_server_port counter accept comment "Charite VPN"
+add rule inet filter input  ip  saddr $charite_vpn_server_ip  udp sport $charite_vpn_server_port ct state established counter accept comment "Charite VPN"
 
-add rule inet filter input  ip  saddr $charite_vpn_server_ip  udp sport $charite_vpn_server_port counter accept
-add rule inet filter input  ip6 saddr $charite_vpn_server_ip6 udp sport $charite_vpn_server_port counter accept
-# TODO: ct state established ?
+add rule inet filter output ip6 daddr $charite_vpn_server_ip6 udp dport $charite_vpn_server_port counter accept comment "Charite VPN"
+add rule inet filter input  ip6 saddr $charite_vpn_server_ip6 udp sport $charite_vpn_server_port ct state established counter accept comment "Charite VPN"
+
+#
+# Proxy (obligatory for web access)
+#
+define charite_proxy_ip = { 141.42.5.215 }
+define charite_proxy_port = { 8080 }
+
+add rule inet filter output ip  daddr $charite_proxy_ip tcp dport $charite_proxy_port counter accept comment "Charite Proxy"
+add rule inet filter input  ip  saddr $charite_proxy_ip tcp sport $charite_proxy_port ct state established counter accept comment "Charite Proxy"
+
