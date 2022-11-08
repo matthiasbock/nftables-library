@@ -11,7 +11,6 @@ include "filter.nft"
 # - codebasehq.com
 #
 
-
 #
 # GitHub
 # https://github.com/
@@ -21,7 +20,6 @@ define github_git_ports = {443, 22}
 
 add rule inet filter output ip daddr $github_ip tcp dport $github_git_ports counter accept comment "GitHub"
 add rule inet filter input  ip saddr $github_ip tcp sport $github_git_ports ct state established counter accept comment "GitHub"
-
 
 #
 # Kernel.org git repositories
@@ -37,7 +35,6 @@ add rule inet filter input  ip saddr $git_kernel_org_ip4 tcp sport $git_kernel_o
 add rule inet filter output ip6 daddr $git_kernel_org_ip6 tcp dport $git_kernel_org_ports counter accept comment "git.kernel.org"
 add rule inet filter input  ip6 saddr $git_kernel_org_ip6 tcp sport $git_kernel_org_ports ct state established counter accept comment "git.kernel.org"
 
-
 #
 # GitLab - Rheinisch-Westfaelische Technische Hochschule Aachen (RWTH Aachen)
 # https://gitlab.vci.rwth-aachen.de:9000/
@@ -47,7 +44,6 @@ define gitlab_rwth_port = 9000
 
 add rule inet filter output ip daddr $gitlab_rwth_address tcp dport $gitlab_rwth_port counter accept comment "GitLab RWTH Aachen"
 add rule inet filter input  ip saddr $gitlab_rwth_address tcp sport $gitlab_rwth_port ct state established counter accept comment "GitLab RWTH Aachen"
-
 
 #
 # GitLab - Berlin Institute of Health (BIH)
@@ -59,7 +55,6 @@ define gitlab_bih_port = 2022
 add rule inet filter output ip daddr $gitlab_bih_address tcp dport $gitlab_bih_port counter accept comment "GitLab BIH"
 add rule inet filter input  ip saddr $gitlab_bih_address tcp sport $gitlab_bih_port ct state established counter accept comment "GitLab BIH"
 
-
 #
 # GitLab Ext - Charite Universitaetsmedizin Berlin
 # https://git-ext.charite.de/
@@ -69,4 +64,14 @@ define gitlab_charite_port = 2022
 
 add rule inet filter output ip daddr $gitlab_charite_address tcp dport $gitlab_charite_port counter accept comment "GitLab Charite Ext"
 add rule inet filter input  ip saddr $gitlab_charite_address tcp sport $gitlab_charite_port ct state established counter accept comment "GitLab Charite Ext"
+
+#
+# ZeroCat.org
+# http://www.zerocat.org/
+#
+define ip_git_zerocat_org = 185.242.113.29
+define ports_git_zerocat_org = { 9418 }
+
+add rule inet filter output ip daddr $ip_git_zerocat_org tcp dport $ports_git_zerocat_org counter accept comment "git://zerocat.org"
+add rule inet filter input  ip saddr $ip_git_zerocat_org tcp sport $ports_git_zerocat_org ct state established counter accept comment "git://zerocat.org"
 
