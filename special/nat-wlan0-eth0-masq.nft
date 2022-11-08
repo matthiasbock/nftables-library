@@ -1,0 +1,15 @@
+#!/usr/bin/env -S /usr/sbin/nft -I /etc/firewall/nftables-library/ -f
+
+table inet nat {
+	chain postrouting {
+		type nat hook postrouting priority srcnat; policy accept;
+	}
+}
+
+#add rule inet filter input  iifname eth0 ether saddr == {$ether_none, $ether_broadcast, $ether_pc} counter accept
+#add rule inet filter output oifname eth0 ether daddr == {$ether_none, $ether_broadcast, $ether_pc} counter accept
+
+add rule inet filter forward iifname eth0 oifname wlan0 ip saddr 192.168.0.0/16 counter accept
+add rule inet nat postrouting ip saddr 192.168.0.0/16 oifname wlan0 counter masquerade
+add rule inet filter forward iifname wlan0 oifname eth0 ct state established counter accept
+
