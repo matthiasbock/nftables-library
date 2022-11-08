@@ -15,7 +15,7 @@ add rule inet filter  input meta l4proto {udp, tcp} th sport 53 ct state establi
 # - DNS over TLS (DoT)
 #   https://de.wikipedia.org/wiki/DNS_over_TLS
 #
-define dns_over_tls_providers = {}
+#define dns_over_tls_providers = {}
 
 add rule inet filter output meta l4proto {udp, tcp} th dport 853 counter accept comment "DNS-over-TLS client"
 add rule inet filter  input meta l4proto {udp, tcp} th sport 853 ct state established counter accept comment "DNS-over-TLS client"
