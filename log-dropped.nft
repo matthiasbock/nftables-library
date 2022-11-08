@@ -1,0 +1,5 @@
+#!/usr/bin/env -S /usr/sbin/nft -I /etc/firewall/nftables-library/ -f
+
+add rule inet filter input counter log drop comment "End of inet filter rules"
+add rule inet filter output counter log drop comment "End of inet filter rules"
+
