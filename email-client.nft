@@ -2,5 +2,21 @@
 
 include "filter.nft"
 
-add rule inet filter output tcp dport {25, 465, 587, 143, 993} counter accept
-add rule inet filter input  tcp sport {25, 465, 587, 143, 993} ct state established counter accept
+#
+# Simple Mail Transfer Protocol (SMTP)
+#
+add rule inet filter output tcp dport {25, 465, 587} counter accept comment "SMTP client"
+add rule inet filter input  tcp sport {25, 465, 587} ct state established counter accept comment "SMTP client"
+
+#
+# Inernet Message Access Protocol (IMAP)
+#
+add rule inet filter output tcp dport {143, 993} counter accept comment "IMAP client"
+add rule inet filter input  tcp sport {143, 993} ct state established counter accept comment "IMAP client"
+
+#
+# Post Office Protocol Version 3 (POP3)
+#
+add rule inet filter output tcp dport 110 counter accept comment "POP3 client"
+add rule inet filter input  tcp sport 110 ct state established counter accept comment "POP3 client"
+
