@@ -2,5 +2,5 @@
 
 include "filter.nft"
 
-add rule inet filter input  tcp dport {25, 465, 587, 143, 993} counter accept
-add rule inet filter output tcp sport {25, 465, 587, 143, 993} ct state established counter accept
+add rule inet filter input  tcp dport {25, 465, 587, 110, 143, 993, 995} counter accept
+add rule inet filter output tcp sport {25, 465, 587, 110, 143, 993 ,995} ct state established counter accept

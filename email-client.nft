@@ -17,6 +17,5 @@ add rule inet filter input  tcp sport {143, 993} ct state established counter ac
 #
 # Post Office Protocol Version 3 (POP3)
 #
-add rule inet filter output tcp dport 110 counter accept comment "POP3 client"
-add rule inet filter input  tcp sport 110 ct state established counter accept comment "POP3 client"
-
+add rule inet filter output tcp dport {110, 995} counter accept comment "POP3 client"
+add rule inet filter input  tcp sport {110, 995} ct state established counter accept comment "POP3 client"
