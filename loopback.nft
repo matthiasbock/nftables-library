@@ -3,12 +3,12 @@
 include "filter.nft"
 
 # IPv4
-add rule inet filter output ip saddr 127.0.0.1 counter accept
-add rule inet filter input  ip daddr 127.0.0.1 counter accept
-add rule inet filter output ip daddr 127.0.0.1 counter accept
-add rule inet filter input  ip saddr 127.0.0.1 counter accept
+add rule inet filter output ip saddr 127.0.0.1 counter accept comment "Loopback"
+add rule inet filter input  ip daddr 127.0.0.1 counter accept comment "Loopback"
+add rule inet filter output ip daddr 127.0.0.1 counter accept comment "Loopback"
+add rule inet filter input  ip saddr 127.0.0.1 counter accept comment "Loopback"
 
 # IPv6
-add rule inet filter input  iifname lo ip6 saddr 0000:0000:0000:0000:0000:0000:0000:0001 ip6 daddr 0000:0000:0000:0000:0000:0000:0000:0001 counter accept
-add rule inet filter output oifname lo ip6 saddr 0000:0000:0000:0000:0000:0000:0000:0001 ip6 daddr 0000:0000:0000:0000:0000:0000:0000:0001 counter accept
+add rule inet filter input  iifname lo ip6 saddr 0000:0000:0000:0000:0000:0000:0000:0001 ip6 daddr 0000:0000:0000:0000:0000:0000:0000:0001 counter accept comment "Loopback"
+add rule inet filter output oifname lo ip6 saddr 0000:0000:0000:0000:0000:0000:0000:0001 ip6 daddr 0000:0000:0000:0000:0000:0000:0000:0001 counter accept comment "Loopback"
 

@@ -3,9 +3,10 @@
 include "filter.nft"
 
 # Web interface
-add rule inet filter output tcp dport 8384 counter accept
-add rule inet filter  input tcp sport 8384 ct state established counter accept
+add rule inet filter output tcp dport 8384 counter accept comment "Syncthing web client"
+add rule inet filter  input tcp sport 8384 ct state established counter accept comment "Syncthing web client"
 
 # Contact a relay server
-add rule inet filter output tcp dport {22067, 22070} counter accept
-add rule inet filter input  tcp sport {22067, 22070} ct state established counter accept
+add rule inet filter output tcp dport {22067, 22070} counter accept comment "Syncthing relay client"
+add rule inet filter input  tcp sport {22067, 22070} ct state established counter accept comment "Syncthing relay client"
+

@@ -2,9 +2,11 @@
 
 include "filter.nft"
 
-# Multicast DNS
-add rule inet filter input  ip daddr == 224.0.0.251 udp sport 5353 udp dport 5353 counter accept
-add rule inet filter output ip daddr == 224.0.0.251 udp sport 5353 udp dport 5353 counter accept
-add rule inet filter input  ip6 daddr == ff02::00fb udp sport 5353 udp dport 5353 counter accept
-add rule inet filter output ip6 daddr == ff02::00fb udp sport 5353 udp dport 5353 counter accept
+#
+# Multicast DNS (MDNS) / Bonjour / Zeroconf
+#
+add rule inet filter input  ip daddr == 224.0.0.251 udp sport 5353 udp dport 5353 counter accept comment "Multicast DNS"
+add rule inet filter output ip daddr == 224.0.0.251 udp sport 5353 udp dport 5353 counter accept comment "Multicast DNS"
+add rule inet filter input  ip6 daddr == ff02::00fb udp sport 5353 udp dport 5353 counter accept comment "Multicast DNS"
+add rule inet filter output ip6 daddr == ff02::00fb udp sport 5353 udp dport 5353 counter accept comment "Multicast DNS"
 
