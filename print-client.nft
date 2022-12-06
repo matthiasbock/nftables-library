@@ -1,0 +1,27 @@
+#!/usr/bin/env -S /usr/sbin/nft -I /etc/firewall/nftables-library/ -f
+
+include "filter.nft"
+
+#
+# Source:
+# https://sites.google.com/view/howtoguidesforkyoceraprinters/list-of-network-ports-used?pli=1
+#
+
+#
+# IPP
+#
+add rule inet filter output tcp dport 631 counter accept comment "IPP client"
+add rule inet filter input  tcp sport 631 ct state established counter accept comment "IPP client"
+
+#
+# LPD/LPR/JetDirect
+#
+add rule inet filter output tcp dport {515,9100,9101,9102,9103} counter accept comment "LPD/LPR client"
+add rule inet filter input  tcp sport {515,9100,9101,9102,9103} ct state established counter accept comment "LPD/LPR client"
+
+#
+# WSD Print/Scan
+#
+add rule inet filter output tcp dport {5357,5358} counter accept comment "WSD print/scan client"
+add rule inet filter input  tcp sport {5357,5358} ct state established counter accept comment "WSD print/scan client"
+
