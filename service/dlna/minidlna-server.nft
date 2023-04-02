@@ -1,0 +1,16 @@
+#!/usr/bin/env -S /usr/sbin/nft -I /etc/firewall/nftables-library/ -f
+
+include "filter.nft"
+
+#
+# UPnP server
+#
+add rule inet filter input  udp dport 1900 counter accept comment "UPnP server"
+add rule inet filter output udp sport 1900 counter accept comment "UPnP server"
+
+#
+# MiniDLNA server
+#
+add rule inet filter input  tcp dport 8200 counter accept comment "MiniDLNA server"
+add rule inet filter output tcp sport 8200 ct state established counter accept comment "MiniDLNA server"
+
