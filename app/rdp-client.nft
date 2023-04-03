@@ -1,0 +1,15 @@
+#!/usr/bin/env -S /usr/sbin/nft -I /etc/firewall/nftables-library/ -f
+#
+# Remote Desktop Protocol
+#
+# https://en.wikipedia.org/wiki/Remote_Desktop_Protocol
+#
+
+include "filter.nft"
+
+add rule inet filter output udp sport 3389 counter accept comment "RDP client"
+add rule inet filter input  udp dport 3389 ct state established counter accept comment "RDP client"
+
+add rule inet filter output tcp sport 3389 counter accept comment "RDP client"
+add rule inet filter input  tcp dport 3389 ct state established counter accept comment "RDP client"
+
