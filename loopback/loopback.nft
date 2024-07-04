@@ -1,4 +1,4 @@
-#!/usr/bin/env -S /usr/sbin/nft -I /usr/share/nftables -f
+#!/usr/bin/env -S nft -I /usr/share/nftables -f
 
 include "filter.nft"
 
