@@ -7,6 +7,9 @@
 
 include "filter.nft"
 
+
+
+
 add rule inet filter output udp sport 3389 counter accept comment "RDP client"
 add rule inet filter input  udp dport 3389 ct state established counter accept comment "RDP client"
 

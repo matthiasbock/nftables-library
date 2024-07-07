@@ -1,6 +1,31 @@
 #!/usr/bin/env -S nft -I /usr/share/nftables -f
 
-define ip_fritzbox = {
-    # 192.168.0.1,
-    192.168.178.1
-};
+#
+# Routers
+#
+# define ip_fritzbox = {
+#     # 192.168.0.1,
+#     192.168.178.1
+# }
+
+#
+# Network printers
+#
+# define ip_printers = {
+# 		192.168.178.0/24,
+# 		10.38.24.0/12
+# 	}
+#ip6_printers = {}
+#define ip_printers = {
+#		10.38.24.191,
+#		10.38.24.194,
+#		10.38.24.84
+#	}
+
+#
+# Debuggable Android devices
+#
+# define ip_android = {
+#     10.0.0.0/16,
+#     192.168.0.0/16
+# }

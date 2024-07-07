@@ -1,19 +1,10 @@
 #!/usr/bin/env -S nft -I /usr/share/nftables -f
 
 include "filter.nft"
+include "hosts.nft"
+include "services.nft"
 
-#
-# Source:
-# https://sites.google.com/view/howtoguidesforkyoceraprinters/list-of-network-ports-used?pli=1
-#
 
-define tcp_dport_ipp=631
-define tcp_dport_lp={515,9100,9101,9102,9103}
-define tcp_dport_wsd={5357,5358}
-
-#
-# List of printers to allow
-#
 define ip_printers = {
 		192.168.178.0/24,
 		10.38.24.0/12
@@ -24,6 +15,20 @@ define ip_printers = {
 #		10.38.24.194,
 #		10.38.24.84
 #	}
+
+define tcp_dport_ipp = 631
+define tcp_dport_lp = {
+            515,
+            9100,
+            9101,
+            9102,
+            9103
+        }
+define tcp_dport_wsd = {
+            5357,
+            5358
+        }
+
 
 #add rule inet filter output ip daddr $ip_printers counter accept comment "Local printers"
 #add rule inet filter input  ip saddr $ip_printers counter accept comment "Local printers"

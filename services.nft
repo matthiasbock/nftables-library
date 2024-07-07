@@ -1,6 +1,22 @@
 #!/usr/bin/env -S nft -I /usr/share/nftables -f
 
-define port_rdp = 3389
+#
+# Services provided by routers
+#
+# define comment_fritzbox_cabletv = "Cable TV"
+# define port_fritzbox_cabletv = 554
 
-define comment_fritzbox_cabletv = "Cable TV"
-define port_fritzbox_cabletv = 554
+#
+# Remote desktop
+#
+# define port_rdp = 3389
+
+#
+# Android debug bridge
+#
+# define port_adb = 5555
+
+# set allowed_ports {
+#     type inet_service;
+#     elements = { 22, 5555, 8080 }  # Added port 8080
+# }

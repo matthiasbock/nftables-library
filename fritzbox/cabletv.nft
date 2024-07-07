@@ -7,8 +7,14 @@ include "hosts.nft"
 include "services.nft"
 include "filter.nft"
 
-# TODO...
-#
+
+define ip_fritzbox = {
+    # 192.168.0.1,
+    192.168.178.1
+}
+
+define port_fritzbox_cabletv = 554
+
 
 # add table inet filter_input
 # add table inet filter_output

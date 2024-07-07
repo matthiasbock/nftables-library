@@ -1,0 +1,20 @@
+#!/usr/bin/env -S nft -I /usr/share/nftables -f
+
+include "filter.nft"
+include "hosts.nft"
+include "services.nft"
+
+
+define ip_android = {
+    10.0.0.0/16,
+    192.168.0.0/16
+}
+
+define port_adb = 5555
+
+
+#
+# Android debug bridge via network
+#
+add rule inet filter output ip daddr $ip_android tcp dport $port_adb counter accept comment "Android debug bridge (ADB)"
+add rule inet filter input  ip saddr $ip_android tcp sport $port_adb ct state established counter accept comment "Android debug bridge (ADB)"
