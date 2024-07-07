@@ -1,4 +1,4 @@
-#!/usr/sbin/nft -f
+#!/usr/bin/env -S nft -I /usr/share/nftables -f
 
 add table inet filter
 
