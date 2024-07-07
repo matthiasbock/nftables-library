@@ -1,19 +1,26 @@
 #!/usr/bin/env -S nft -I /usr/share/nftables -f
+#
+# FritzBox cable tv streaming
+#
 
+include "hosts.nft"
+include "services.nft"
 include "filter.nft"
 
-#
-# FritzBox cable tv
-#
 # TODO...
 #
 
-#add rule inet filter output ip daddr 192.168.178.1 counter accept comment "Cable TV"
-#add rule inet filter input  ip saddr 192.168.178.1 ct state established counter accept comment "Cable TV"
+# add table inet filter_input
+# add table inet filter_output
 
-add rule inet filter output ip daddr 192.168.0.1/16 tcp dport 554 counter accept comment "Cable TV"
-add rule inet filter input  ip saddr 192.168.0.1/16 tcp sport 554 ct state established counter accept comment "Cable TV"
+# add chain inet filter_input fritzbox { policy drop; }
 
-add rule inet filter output ip daddr 192.168.0.1/16 udp dport 554 counter accept comment "Cable TV"
-add rule inet filter input  ip saddr 192.168.0.1/16 udp sport 554 ct state established counter accept comment "Cable TV"
+#add rule inet filter output ip daddr $ip_fritzbox counter accept comment "Cable TV"
+#add rule inet filter input  ip saddr $ip_fritzbox ct state established counter accept comment "Cable TV"
+
+add rule inet filter output ip daddr $ip_fritzbox tcp dport $port_fritzbox_cabletv counter accept comment "Cable TV"
+add rule inet filter input  ip saddr $ip_fritzbox tcp sport $port_fritzbox_cabletv ct state established counter accept comment "Cable TV"
+
+add rule inet filter output ip daddr $ip_fritzbox udp dport $port_fritzbox_cabletv counter accept comment "Cable TV"
+add rule inet filter input  ip saddr $ip_fritzbox udp sport $port_fritzbox_cabletv ct state established counter accept comment "Cable TV"
 

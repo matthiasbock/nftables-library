@@ -1,0 +1,6 @@
+#!/usr/bin/env -S nft -I /usr/share/nftables -f
+
+define port_rdp = 3389
+
+define comment_fritzbox_cabletv = "Cable TV"
+define port_fritzbox_cabletv = 554
