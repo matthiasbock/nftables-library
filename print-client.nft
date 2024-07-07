@@ -7,21 +7,42 @@ include "filter.nft"
 # https://sites.google.com/view/howtoguidesforkyoceraprinters/list-of-network-ports-used?pli=1
 #
 
+define tcp_dport_ipp=631
+define tcp_dport_lp={515,9100,9101,9102,9103}
+define tcp_dport_wsd={5357,5358}
+
+#
+# List of printers to allow
+#
+define ip_printers = {
+		192.168.178.0/24,
+		10.38.24.0/12
+	}
+#ip6_printers = {}
+#define ip_printers = {
+#		10.38.24.191,
+#		10.38.24.194,
+#		10.38.24.84
+#	}
+
+#add rule inet filter output ip daddr $ip_printers counter accept comment "Local printers"
+#add rule inet filter input  ip saddr $ip_printers counter accept comment "Local printers"
+
 #
 # IPP
 #
-add rule inet filter output tcp dport 631 counter accept comment "IPP client"
-add rule inet filter input  tcp sport 631 ct state established counter accept comment "IPP client"
+add rule inet filter output ip daddr $ip_printers tcp dport $tcp_dport_ipp counter accept comment "Print client (IPP)"
+add rule inet filter input  ip saddr $ip_printers tcp sport $tcp_dport_ipp ct state established counter accept comment "Print client (IPP)"
 
 #
 # LPD/LPR/JetDirect
 #
-add rule inet filter output tcp dport {515,9100,9101,9102,9103} counter accept comment "LPD/LPR client"
-add rule inet filter input  tcp sport {515,9100,9101,9102,9103} ct state established counter accept comment "LPD/LPR client"
+add rule inet filter output ip daddr $ip_printers tcp dport $tcp_dport_lp counter accept comment "Print client (LPD/LPR)"
+add rule inet filter input  ip saddr $ip_printers tcp sport $tcp_dport_lp ct state established counter accept comment "Print client (LPD/LPR)"
 
 #
 # WSD Print/Scan
 #
-add rule inet filter output tcp dport {5357,5358} counter accept comment "WSD print/scan client"
-add rule inet filter input  tcp sport {5357,5358} ct state established counter accept comment "WSD print/scan client"
+add rule inet filter output ip daddr $ip_printers tcp dport $tcp_dport_wsd counter accept comment "Print/Scan client (WSD)"
+add rule inet filter input  ip saddr $ip_printers tcp sport $tcp_dport_wsd ct state established counter accept comment "Print/Scan client (WSD)"
 
