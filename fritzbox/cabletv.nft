@@ -1,0 +1,19 @@
+#!/usr/bin/env -S nft -I /usr/share/nftables -f
+
+include "filter.nft"
+
+#
+# FritzBox cable tv
+#
+# TODO...
+#
+
+#add rule inet filter output ip daddr 192.168.178.1 counter accept comment "Cable TV"
+#add rule inet filter input  ip saddr 192.168.178.1 ct state established counter accept comment "Cable TV"
+
+add rule inet filter output ip daddr 192.168.0.1/16 tcp dport 554 counter accept comment "Cable TV"
+add rule inet filter input  ip saddr 192.168.0.1/16 tcp sport 554 ct state established counter accept comment "Cable TV"
+
+add rule inet filter output ip daddr 192.168.0.1/16 udp dport 554 counter accept comment "Cable TV"
+add rule inet filter input  ip saddr 192.168.0.1/16 udp sport 554 ct state established counter accept comment "Cable TV"
+
