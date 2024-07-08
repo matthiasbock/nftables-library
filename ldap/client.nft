@@ -26,7 +26,9 @@ define ip_ldap_client = {
 define port_ldap_client = 636
 
 
-# IPv4
+#
+# TCP
+#
 add rule inet \
     filter output \
     ip daddr == $ip_ldap_client \
@@ -39,8 +41,29 @@ add rule inet \
     filter input  \
     ip saddr == $ip_ldap_client \
     tcp sport $port_ldap_client \
-    ct state established \
+    ct state { established, related } \
     counter \
     accept \
     comment "LDAP client"
+
+#
+# UDP
+#
+
+# add rule inet \
+#     filter output \
+#     ip daddr == $ip_ldap_client \
+#     udp dport $port_ldap_client \
+#     counter \
+#     accept \
+#     comment "LDAP client"
+
+# add rule inet \
+#     filter input  \
+#     ip saddr == $ip_ldap_client \
+#     udp sport $port_ldap_client \
+#     ct state { established, related } \
+#     counter \
+#     accept \
+#     comment "LDAP client"
 
