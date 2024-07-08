@@ -1,0 +1,14 @@
+#!/usr/bin/env -S nft -I /usr/share/nftables -f
+#
+# Server services
+#
+
+include "dhcp-server.nft"
+include "dns-server.nft"
+include "tftp-server.nft"
+#include "web-server.nft"
+#include "email-server.nft"
+#include "ssh-server.nft"
+#include "samba-server.nft"
+#include "ntp-server.nft"
+include "service/minidlna-server.nft"
