@@ -1,0 +1,46 @@
+#!/usr/bin/env -S nft -I /usr/share/nftables -f
+#
+# https://de.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol
+#
+
+include "filter.nft"
+
+
+define ip_ldap_client = {
+    # charite.de
+    10.32.85.11,
+    10.32.85.1,
+    10.32.85.4,
+    10.32.4.98,
+    10.32.85.13,
+    10.32.4.97,
+    10.32.4.99,
+    10.32.4.96,
+    10.32.85.2,
+    # info.charite.de
+    10.32.32.150
+}
+
+# 389 für ungesicherte oder mit STARTTLS gesicherte Verbindungen
+# 636 für mit TLS gesicherte Verbindungen (LDAPS)
+define port_ldap_client = 636
+
+
+# IPv4
+add rule inet \
+    filter output \
+    ip daddr == $ip_ldap_client \
+    tcp dport $port_ldap_client \
+    counter \
+    accept \
+    comment "LDAP client"
+
+add rule inet \
+    filter input  \
+    ip saddr == $ip_ldap_client \
+    tcp sport $port_ldap_client \
+    ct state established \
+    counter \
+    accept \
+    comment "LDAP client"
+
