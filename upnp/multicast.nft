@@ -1,0 +1,49 @@
+#!/usr/bin/env -S nft -I /usr/share/nftables -f
+#
+# UPnP discovery
+#
+# https://de.wikipedia.org/wiki/Universal_Plug_and_Play
+#
+
+include "filter.nft"
+
+
+define ip_upnp_multicast = 239.255.255.250
+define ip6_upnp_multicast = { FF02::C, FF05::C, FF08::C, FF0E::C }
+
+
+add rule inet \
+    filter input \
+    ip saddr == $ip_upnp_multicast \
+    udp sport 1900 \
+    udp dport 1900 \
+    counter \
+    accept \
+    comment "UPnP discovery (incoming)"
+
+add rule inet \
+    filter input \
+    ip6 saddr == $ip6_upnp_multicast \
+    udp sport 1900 \
+    udp dport 1900 \
+    counter \
+    accept \
+    comment "UPnP discovery (incoming)"
+
+add rule inet \
+    filter output \
+    ip daddr == $ip_upnp_multicast \
+    udp sport 1900 \
+    udp dport 1900 \
+    counter \
+    accept \
+    comment "UPnP discovery (outgoing)"
+
+add rule inet \
+    filter output \
+    ip6 daddr == $ip6_upnp_multicast \
+    udp sport 1900 \
+    udp dport 1900 \
+    counter \
+    accept \
+    comment "UPnP discovery (outgoing)"

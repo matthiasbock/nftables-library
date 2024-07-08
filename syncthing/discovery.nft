@@ -1,0 +1,13 @@
+#!/usr/bin/env -S nft -I /usr/share/nftables -f
+
+include "filter.nft"
+
+#
+# The rules below apply for client and server alike
+#
+
+# Discovery
+add rule inet filter output udp dport 21027 counter accept comment "Syncthing discovery"
+add rule inet filter output udp sport 21027 counter accept comment "Syncthing discovery"
+add rule inet filter input  udp dport 21027 counter accept comment "Syncthing discovery"
+add rule inet filter input  udp sport 21027 counter accept comment "Syncthing discovery"

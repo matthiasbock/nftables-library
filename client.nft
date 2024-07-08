@@ -1,26 +1,37 @@
 #!/usr/bin/env -S nft -I /usr/share/nftables -f
 #
-# Client applications
+# Outgoing client connections
 #
 
-include "dhcp-client.nft"
-include "dns-client.nft"
-include "dns-multicast.nft"
-include "ntp-client.nft"
-include "web-client.nft"
-include "email-client.nft"
-include "ssh-client.nft"
-include "vpn-client-bht.nft"
-include "vpn-client-charite.nft"
-include "git-client.nft"
-include "syncthing-client.nft"
-include "syncthing.nft"
-include "samba-client.nft"
-include "nfs-client.nft"
-include "print-client.nft"
-include "vmware-horizon-client-charite.nft"
-#include "microsoft-teams-client.nft"
+include "apps/adb-client.nft"
+#include "apps/microsoft-teams-client.nft"
+include "apps/rdp-client.nft"
+include "apps/vmware-horizon-client-charite.nft"
+
+include "dhcp/client.nft"
+
+include "dns/client.nft"
+include "dns/mdns.nft"
+include "dns/llmnr.nft"
+
 include "fritzbox/cabletv.nft"
-include "app/rdp-client.nft"
-include "adb-client.nft"
+include "http/client.nft"
 include "ldap/client.nft"
+include "mail/client.nft"
+include "nfs/client.nft"
+include "ntp/client.nft"
+include "print/client.nft"
+include "smb/client.nft"
+include "ssh/client.nft"
+
+include "syncthing/client.nft"
+include "syncthing/discovery.nft"
+include "syncthing/sync.nft"
+
+include "upnp/client.nft"
+include "upnp/multicast.nft"
+
+include "version-control/git/client.nft"
+
+include "vpn/client/fortinet-bht.nft"
+include "vpn/client/openvpn-charite.nft"

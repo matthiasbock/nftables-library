@@ -1,0 +1,37 @@
+#!/usr/bin/env -S nft -I /usr/share/nftables -f
+#
+# UPnP client
+# Control / Description / Presentation / Eventing
+#
+
+include "filter.nft"
+
+
+#
+# For security reasons, an UPnP service should only
+# communicate with addresses on the local network
+#
+define ip_upnp_servers = {
+    10.0.0.0/8,
+    192.0.0.0/8
+}
+
+
+add rule inet \
+    filter output \
+    ip daddr == $ip_upnp_servers \
+    udp sport 1900 \
+    udp dport 1900 \
+    counter \
+    accept \
+    comment "UPnP client"
+
+add rule inet \
+    filter input \
+    ip saddr == $ip_upnp_servers \
+    udp sport 1900 \
+    udp dport 1900 \
+    ct state established \
+    counter \
+    accept \
+    comment "UPnP client"

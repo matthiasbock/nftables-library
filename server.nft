@@ -1,14 +1,23 @@
 #!/usr/bin/env -S nft -I /usr/share/nftables -f
 #
-# Server services
+# Incoming requests for local server services
 #
 
-include "dhcp-server.nft"
-include "dns-server.nft"
-include "tftp-server.nft"
-#include "web-server.nft"
-#include "email-server.nft"
-#include "ssh-server.nft"
-#include "samba-server.nft"
-#include "ntp-server.nft"
-include "service/minidlna-server.nft"
+include "dhcp/server.nft"
+include "dlna/server.nft"
+
+include "dns/server.nft"
+# include "dns/mdns.nft"
+# include "dns/llmnr.nft"
+
+#include "http/server.nft"
+#include "mail/server.nft"
+#include "nfs/server.nft"
+#include "ntp/server.nft"
+#include "print/server.nft"
+#include "smb/server.nft"
+#include "ssh/server.nft"
+
+include "tftp/server.nft"
+include "upnp/server.nft"
+# include "upnp/multicast.nft"
