@@ -5,6 +5,13 @@ include "filter.nft"
 #
 # Secure Shell (SSH)
 #
+
+# Local target addresses
+#define ssh_client_local_targets = { 1
+add rule inet filter output ip daddr 192.168.0.0/16 tcp dport { 22, 2222 } counter accept comment "SSH client (LAN)"
+add rule inet filter input  ip saddr 192.168.0.0/16 tcp sport { 22, 2222 } ct state established counter accept comment "SSH client (LAN)"
+
+# All other target addresses
 add rule inet filter output tcp dport 22 counter accept comment "SSH client"
 add rule inet filter input  tcp sport 22 ct state established counter accept comment "SSH client"
 
