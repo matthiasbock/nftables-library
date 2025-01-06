@@ -1,0 +1,7 @@
+#!/usr/bin/env -S nft -I /usr/share/nftables -f
+
+include "filter.nft"
+
+add rule inet filter output tcp dport 5555 counter accept comment "ADB client"
+add rule inet filter input  tcp sport 5555 ct state established counter accept comment "ADB client"
+

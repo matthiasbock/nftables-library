@@ -16,5 +16,6 @@ define port_adb = 5555
 #
 # Android debug bridge via network
 #
-add rule inet filter output ip daddr $ip_android tcp dport $port_adb counter accept comment "Android debug bridge (ADB)"
-add rule inet filter input  ip saddr $ip_android tcp sport $port_adb ct state established counter accept comment "Android debug bridge (ADB)"
+add rule inet filter output ip daddr $ip_android tcp dport $port_adb counter accept comment "ADB client"
+add rule inet filter input  ip saddr $ip_android tcp sport $port_adb ct state established counter accept comment "ADB client"
+
